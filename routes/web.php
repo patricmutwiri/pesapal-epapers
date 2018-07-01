@@ -26,6 +26,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware('auth', function (Request $request) {
+Route::group(['middleware' => 'auth'], function () {
 	Route::get('/newpaper', 'NewspaperController@create')->name('newpaper');
+	Route::get('/orders', 'OrdersController@index')->name('orders');
+	Route::get('/order/{id}', 'OrdersController@show')->name('order');
 });

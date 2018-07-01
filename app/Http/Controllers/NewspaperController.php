@@ -36,7 +36,28 @@ class NewspaperController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validatedData = $request->validate([
+            'name'  => 'required|unique:newspapers|max:50',
+            'file'  => 'required|mimes:jpeg,png,jpg,zip,pdf,doc,docx,epub,rtf,txt|max:2048',
+            'price' => 'required|numeric',
+        ]);
+        $paper = new Newspaper;
+        //upload file
+        if ($request->hasFile('file')) {
+            //dd($request->file);
+            $file = $request->file;
+            $uniquepaperName = uniqid() . $request->file->getClientOriginalName() . '.' . $request->file->getClientOriginalExtension();
+            $request->file->move(public_path('files') . $uniquepaperName);
+            $file = $uniquepaperName;
+        }
+        $paper->name    = $request->name;
+        $paper->price   = $request->price;
+        $paper->file    = $file;
+        if($paper->save()) {
+            return back()->with('message','Newspaper Saved Successfully');
+        } else {
+            return back()->with('error','Newspaper Saved Successfully');
+        }
     }
 
     /**

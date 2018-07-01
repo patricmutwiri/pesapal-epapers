@@ -81,11 +81,34 @@
                 <div class="title m-b-md">
                     New Paper
                 </div>
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        <h2>{{ session()->get('message') }}</h2>
+                    </div>
+                @endif
+                @if(session()->has('error'))
+                    <div class="alert alert-error">
+                        <h2>{{ session()->get('error') }}</h2>
+                    </div>
+                @endif
                 <div class="links">
                     {{ Form::open(array('url' => action('NewspaperController@store'),'files'=>'true')) }}
-
-                    {{ Form::submit('Save Now') }}
-                    {{csrf_field()}}
+                    <p>
+                        {{ Form::label('name', 'Paper Name') }}
+                        {{ Form::text('name') }}
+                    </p>
+                    <p>
+                        {{ Form::label('price', 'Paper Price') }}
+                        {{ Form::number('price', '50') }}
+                    </p>
+                    <p>
+                        {{ Form::label('file', 'Upload File') }}
+                        {{ Form::file('file') }}
+                    </p>
+                    <p>
+                        {{ Form::submit('Save Now') }}
+                        {{csrf_field()}}
+                    <p>
                     {{ Form::close() }}
                 </div>
             </div>

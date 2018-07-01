@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Papers</title>
-
+        {{-- Patrick Mutwiri --}}
+        {{-- twitter.com/patric_mutwiri --}}
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
         <!-- Styles -->
         <style>
             html, body {
@@ -62,6 +62,10 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            input[type="checkbox"] {
+                text-align: left;
+                float: left;
+            }
         </style>
     </head>
     <body>
@@ -70,6 +74,8 @@
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/orders') }}">My Orders</a>
+                        <a href="{{ url('/newpaper') }}">Add Paper</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -81,14 +87,20 @@
                 <div class="title m-b-md">
                     Papers
                 </div>
-
-                @forelse ($papers as $paper)
-                    <li>{{ $paper->name }}</li>
-                @empty
+                @if(count($papers) >= 1) 
+                <p> Please Check the paper(s) you'd like to buy. </p>
+                <hr/>
+                    {{ Form::open() }}                
+                        @foreach ($papers as $paper)
+                            <p> {{ Form::checkbox('papers', $paper->id, false) }} &nbsp; {{ ucwords(strtolower($paper->name)).' / '.date('D d M y',strtotime($paper->created_at)) }}</p>
+                        @endforeach
+                    {{ Form::submit('Pay Now') }}
+                    {{ Form::close() }}
+                @else
                     <div class="links">
                         {{ 'No Papers Found'}}
                     </div>
-                @endforelse
+                @endif
             </div>
         </div>
     </body>
