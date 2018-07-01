@@ -14,7 +14,7 @@ class NewspaperController extends Controller
      */
     public function index()
     {
-        $papers = Newspaper::get();
+        $papers = Newspaper::orderByDesc('created_at')->get();
         return view('papers')->with(['papers'=>$papers]);
     }
 
@@ -37,20 +37,19 @@ class NewspaperController extends Controller
     public function store(Request $request)
     {
          $validatedData = $request->validate([
-            'name'  => 'required|unique:newspapers|max:50',
+            'name'  => 'required|max:50',
             'file'  => 'required|mimes:jpeg,png,jpg,zip,pdf,doc,docx,epub,rtf,txt|max:2048',
             'price' => 'required|numeric',
         ]);
         $paper = new Newspaper;
         //upload file
         if ($request->hasFile('file')) {
-            //dd($request->file);
             $file = $request->file;
-            $uniquepaperName = uniqid() . $request->file->getClientOriginalName() . '.' . $request->file->getClientOriginalExtension();
-            $request->file->move(public_path('files') . $uniquepaperName);
+            $uniquepaperName = time() . $request->file->getClientOriginalName();
+            $request->file->move(public_path('newspapers/'), $uniquepaperName);
             $file = $uniquepaperName;
         }
-        $paper->name    = $request->name;
+        $paper->name    = ucwords(strtolower($request->name));
         $paper->price   = $request->price;
         $paper->file    = $file;
         if($paper->save()) {

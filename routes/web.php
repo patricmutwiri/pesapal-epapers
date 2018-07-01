@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('/papers', 'NewspaperController@index')->name('papers');
-Route::post('/papers', 'NewspaperController@index')->name('papers');
 Route::get('/paper/{id}', 'NewspaperController@show')->name('paper');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

@@ -14,7 +14,7 @@
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: #000000;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
@@ -88,11 +88,11 @@
                     Papers
                 </div>
                 @if(count($papers) >= 1) 
-                <p> Please Check the paper(s) you'd like to buy. </p>
-                <hr/>
-                    {{ Form::open() }}                
+                    <p> Please Check the paper(s) you'd like to buy. </p>
+                    <hr/>
+                    {{ Form::open() }}
                         @foreach ($papers as $paper)
-                            <p> {{ Form::checkbox('papers', $paper->id, false) }} &nbsp; {{ ucwords(strtolower($paper->name)).' / '.date('D d M y',strtotime($paper->created_at)) }}</p>
+                            <p> {{ Form::checkbox('papers', $paper->id, false) }} &nbsp; {{ ucwords(strtolower($paper->name)).'#'.$paper->id.' / '.date('D d M y',strtotime($paper->created_at)) }}</p>
                         @endforeach
                     {{ Form::submit('Pay Now') }}
                     {{ Form::close() }}
