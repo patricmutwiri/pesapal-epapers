@@ -1,0 +1,17 @@
+{
+    "last_remote_check": 1530208263,
+    "hooks": {
+        "test-hook": {
+            "name": "test-hook",
+            "description": "This is my first hook.",
+            "version": "v1.0.0",
+            "enabled": true
+        },
+        "bread-templates": {
+            "name": "bread-templates",
+            "description": "Templating BREAD Views",
+            "version": "1.0.13",
+            "enabled": true
+        }
+    }
+}
