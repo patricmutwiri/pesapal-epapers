@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fdd9d7ee7647e3939fea938cf43694f5",
-    "content-hash": "9bee9edfc7a3ffb41f6f660e0ad953fe",
+    "hash": "4c4328f14743320fefd1b08f20bdf985",
+    "content-hash": "713d5c0336bd4850670b7563901d81c1",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -1344,6 +1344,64 @@
             "time": "2018-02-14 22:26:30"
         },
         {
+            "name": "knox/pesapal",
+            "version": "1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/knox2/Pesapal.git",
+                "reference": "9bebe2096d982b3e4edfb697eef74c276828dc86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/knox2/Pesapal/zipball/9bebe2096d982b3e4edfb697eef74c276828dc86",
+                "reference": "9bebe2096d982b3e4edfb697eef74c276828dc86",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.*",
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Knox\\Pesapal\\PesapalServiceProvider"
+                    ],
+                    "aliases": {
+                        "Pesapal": "Knox\\Pesapal\\Facades\\Pesapal"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knox\\Pesapal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Timothy Radier",
+                    "email": "timothyradier@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A laravel package that integrates into the pesapal api",
+            "homepage": "https://github.com/knox2/pesapal",
+            "keywords": [
+                "Orange Money",
+                "laravel 5",
+                "mastercard",
+                "mpesa",
+                "payments",
+                "pesapal",
+                "visa"
+            ],
+            "time": "2018-01-25 22:15:36"
+        },
+        {
             "name": "larapack/doctrine-support",
             "version": "v0.1.6",
             "source": {
@@ -2171,6 +2229,34 @@
                 "random"
             ],
             "time": "2018-06-08 15:26:40"
+        },
+        {
+            "name": "patricmutwiri/pesapal",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/patricmutwiri/pesapal-for-laravel.git",
+                "reference": "0e9655c1cb2432c0115b6818cac80f84fb246501"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/patricmutwiri/pesapal-for-laravel/zipball/0e9655c1cb2432c0115b6818cac80f84fb246501",
+                "reference": "0e9655c1cb2432c0115b6818cac80f84fb246501",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patrick Mutwiri",
+                    "email": "patwiri@gmail.com"
+                }
+            ],
+            "description": "Pay using Pesapal,in Laravel.",
+            "time": "2018-07-02 18:32:02"
         },
         {
             "name": "psr/container",

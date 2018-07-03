@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/papers', 'NewspaperController@index')->name('papers');
+Route::post('/papers', 'NewspaperController@index')->name('papers');
 Route::get('/paper/{id}', 'NewspaperController@show')->name('paper');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
@@ -24,9 +25,20 @@ Route::group(['prefix' => 'admin'], function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+	
+Route::get('/paynow', 'OrdersController@payment')->name('paynow');
+Route::post('/paynow', 'OrdersController@payment')->name('paynow');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/newpaper', 'NewspaperController@create')->name('newpaper');
 	Route::get('/orders', 'OrdersController@index')->name('orders');
 	Route::get('/order/{id}', 'OrdersController@show')->name('order');
+});
+
+Route::get('donepayment', ['as' => 'paymentsuccess', 'uses'=>'OrdersController@paymentsuccess']);
+
+Route::group(['prefix' => '/webhooks'], function () {
+    //PESAPAL
+    Route::get('donepayment', ['as' => 'paymentsuccess', 'uses'=>'OrdersController@paymentsuccess']);
+    Route::get('paymentconfirmation', 'OrdersController@paymentconfirmation');
 });

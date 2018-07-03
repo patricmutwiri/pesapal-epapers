@@ -17,7 +17,7 @@
                     <hr/>
                     <p><b>My Orders</b></p>
                     <form action="" method="post">
-                        @if(count($orders) > 1)
+                        @if(count($orders) >= 1)
                             <table class="table table-bordered"> 
                                 <thead>
                                     <tr>
@@ -32,8 +32,8 @@
                                     @foreach ($orders as $order)
                                         <tr>
                                             <td>{{ $order->id}}</td>
-                                            <td>{{ $order->total}}</td>
-                                            <td>{{ json_encode($order->total) }}</td>
+                                            <td>{{ $order->amount}}</td>
+                                            <td>{!! str_replace(',', '<br/>', $order->papers) !!}</td>
                                             <td>{{ $order->created_at }}</td>
                                             <td>{{ Auth::user($order->uid)->name }}</td>
                                         </tr>

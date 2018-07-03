@@ -18,6 +18,11 @@ class CreateOrdersTable extends Migration
             $table->integer('uid')->unsigned();
             $table->integer('total')->unsigned();
             $table->string('papers');
+            $table->string('businessid');
+            $table->string('transactionid');
+            $table->string('status');
+            $table->string('description');
+            $table->string('amount');
             $table->timestamps();
         });
     }

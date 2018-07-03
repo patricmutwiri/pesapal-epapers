@@ -28,9 +28,9 @@ class HomeController extends Controller
     {
         $papers = Newspaper::all();
         $orders = null;
-        if(Auth::user()) {
+        if(Auth::check()) {
             $uid = Auth::user()->id;
-            $orders = Orders::where('uid',$uid);
+            $orders = Orders::where('uid',$uid)->get();
         }
         return view('home')->with(
             [

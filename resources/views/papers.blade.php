@@ -66,6 +66,23 @@
                 text-align: left;
                 float: left;
             }
+            div.paynow p {
+                width: 100%;
+                padding: 6px 0;
+            }
+            .paynow label{
+                float: left;
+                max-width: 48%;
+            }
+            .paynow input[type=text]{
+                float: right;
+                width: 50%
+            }
+            div.paynow p input[type=submit] {
+                min-width: 200px;
+                padding: 5px;
+                width: 100%;
+            }            
         </style>
     </head>
     <body>
@@ -83,18 +100,30 @@
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content paynow">
                 <div class="title m-b-md">
                     Papers
                 </div>
                 @if(count($papers) >= 1) 
-                    <p> Please Check the paper(s) you'd like to buy. </p>
+                    <p>Please Check the paper(s) you'd like to buy.</p>
                     <hr/>
-                    {{ Form::open() }}
+                    {{ Form::open(['url' => 'paynow']) }}
                         @foreach ($papers as $paper)
-                            <p> {{ Form::checkbox('papers', $paper->id, false) }} &nbsp; {{ ucwords(strtolower($paper->name)).'#'.$paper->id.' / '.date('D d M y',strtotime($paper->created_at)) }}</p>
+                            <p> {{ Form::checkbox('papers[]', json_encode(array('id' => $paper->id, 'price' => $paper->price)), false) }} &nbsp; {{ ucwords(strtolower($paper->name)).'#'.$paper->id.' / '.date('D d M y',strtotime($paper->created_at)).' @Ksh '.$paper->price }}</p>
                         @endforeach
-                    {{ Form::submit('Pay Now') }}
+                    <p>
+                        {{ Form::label('firstname','First Name') }} 
+                        {{ Form::text('firstname','',['required' => true]) }}
+                    </p>
+                    <p>
+                        {{ Form::label('lastname','Last Name') }} 
+                        {{ Form::text('lastname','',['required' => true]) }}
+                    </p>
+                    <p>
+                        {{ Form::label('email','Email') }} 
+                        {{ Form::text('email','',['required' => true]) }}
+                    </p>
+                    <p>{{ Form::submit('Pay Now') }}</p>
                     {{ Form::close() }}
                 @else
                     <div class="links">
