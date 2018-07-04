@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('papers');
             $table->string('businessid');
             $table->string('transactionid');
+            $table->string('trackingid');
             $table->string('status');
             $table->string('description');
             $table->string('dropoff');

@@ -27,6 +27,7 @@
                                         <th>Order Date</th>
                                         <th>User</th>
                                         <th>Dropoff/Location</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +39,7 @@
                                             <td>{{ $order->created_at }}</td>
                                             <td>{{ Auth::user($order->uid)->name }}</td>
                                             <td>{{ $order->dropoff }}</td>
+                                            <td>{{ $order->status }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
