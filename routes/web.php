@@ -38,6 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('donepayment', ['as' => 'paymentsuccess', 'uses'=>'OrdersController@paymentsuccess']);
 Route::get('paymentconfirmation', 'OrdersController@paymentconfirmation');
 
+Route::post('donepayment', ['as' => 'paymentsuccess', 'uses'=>'OrdersController@paymentsuccess']);
+Route::post('paymentconfirmation', 'OrdersController@paymentconfirmation');
+
 Route::group(['prefix' => '/webhooks'], function () {
     //PESAPAL
     Route::get('donepayment', ['as' => 'paymentsuccess', 'uses'=>'OrdersController@paymentsuccess']);
