@@ -30,7 +30,7 @@ class HomeController extends Controller
         $orders = null;
         if(Auth::check()) {
             $uid = Auth::user()->id;
-            $orders = Orders::where('uid',$uid)->get();
+            $orders = Orders::where('uid',$uid)->OrderByDesc('id')->get();
         }
         return view('home')->with(
             [

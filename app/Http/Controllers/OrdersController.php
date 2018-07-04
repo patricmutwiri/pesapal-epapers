@@ -12,6 +12,9 @@ class OrdersController extends Controller
 {
     public function payment(Request $request){//initiates payment
         $papers     = $request->papers;
+        if(!Auth::check()) {
+            return redirect(route('papers'))->with(['message' => 'Please login/register first to checkout']);
+        }
         if(empty($papers)) {
             return redirect(route('papers'))->with(['message' => 'Please select a paper first']);
         }
@@ -30,14 +33,14 @@ class OrdersController extends Controller
         $payments = new Orders;
         $payments->businessid       = '000'.Auth::guard('business')->id(); //Business ID
         $payments->transactionid    = Pesapal::random_reference();
-        $payments->status = 'NEW'; //if user gets to iframe then exits, i prefer to have that as a new/lost transaction, not pending
-        $payments->amount = $amount;
-        $payments->total  = $amount;
-        $payments->uid = Auth::user()->id;
-        $payments->dropoff = $request->dropoff;
-        $payments->phonenumber = $request->phonenumber;
-        $payments->papers = implode(',', $newspapers);
-        $payments->description = 'Payment for; '.implode(',', $newspapers);
+        $payments->status   = 'NEW'; //if user gets to iframe then exits, i prefer to have that as a new/lost transaction, not pending
+        $payments->amount   = $amount;
+        $payments->total    = $amount;
+        $payments->uid      = Auth::user()->id;
+        $payments->dropoff  = $request->dropoff;
+        $payments->phonenumber  = $request->phonenumber;
+        $payments->papers       = implode(',', $newspapers);
+        $payments->description  = 'Payment for; '.implode(',', $newspapers);
 
         $payments->save();
 
@@ -83,8 +86,8 @@ class OrdersController extends Controller
     }
     //Confirm status of transaction and update the DB
     public function checkpaymentstatus($trackingid,$merchant_reference,$pesapal_notification_type){
-        $status = Pesapal::getMerchantStatus($merchant_reference);
-        $payments = Orders::where('trackingid',$trackingid)->first();
+        $status     = Pesapal::getMerchantStatus($merchant_reference);
+        $payments   = Orders::where('trackingid',$trackingid)->first();
         $payments->status = $status;
         $payments->payment_method = "PESAPAL";//use the actual method though...
         $payments->save();
