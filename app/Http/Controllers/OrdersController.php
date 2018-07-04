@@ -72,6 +72,13 @@ class OrdersController extends Controller
         //go back home
         $all = Orders::all();
 
+        $contactEmail   = Auth::user($payments->uid)->email;
+        $contactName    = Auth::user($payments->uid)->name;
+
+        Mail::raw('Hello '.$contactName.', your order was placed and the status assigned as '.$status.'. We will update you as it is processed. ', function ($message) use ($contactEmail, $contactName) {
+           $message->to($contactEmail,$contactName)->subject('Order Notification');
+        });
+
         return view('payments.order', compact('payments'));
     }
     //This method just tells u that there is a change in pesapal for your transaction..
