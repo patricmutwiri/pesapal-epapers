@@ -75,7 +75,7 @@ class OrdersController extends Controller
         $contactEmail   = Auth::user($payments->uid)->email;
         $contactName    = Auth::user($payments->uid)->name;
 
-        Mail::raw('Hello '.$contactName.', your order was placed and the status assigned as '.$status.'. We will update you as it is processed. ', function ($message) use ($contactEmail, $contactName) {
+        Mail::raw('Hello '.$contactName.', your order was placed and the status assigned as PENDING. We will update you as it is processed. ', function ($message) use ($contactEmail, $contactName) {
            $message->to($contactEmail,$contactName)->subject('Order Notification');
         });
 
@@ -137,8 +137,9 @@ class OrdersController extends Controller
     
     public function confirmation($trackingid,$status,$payment_method,$merchant_reference)
     {
-        $payments = Orders::where('tracking',$trackingid)->first();
+        $payments = Orders::where('trackingid',$trackingid)->first();
         $payments->payment_status = $status;
+        $payments->status = $status;
         $payments->payment_method = $payment_method;
         $payments->save();
     }

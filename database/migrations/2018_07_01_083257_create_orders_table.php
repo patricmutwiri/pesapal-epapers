@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->string('businessid');
             $table->string('transactionid');
             $table->string('trackingid');
+            $table->string('payment_method');
+            $table->string('payment_status');
             $table->string('status');
             $table->string('description');
             $table->string('dropoff');
