@@ -54,7 +54,7 @@ class OrdersController extends Controller
             'phonenumber'   =>  $request->phonenumber,
             'reference'     =>  $payments->transactionid,
             'height'        =>  '400px',
-            'currency'      => 'USD'
+            'currency'      => config('pesapal.currency')
         );
         $iframe=Pesapal::makePayment($details);
         return view('payments.paynow', compact('iframe'));
