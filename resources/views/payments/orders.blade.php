@@ -85,7 +85,7 @@
                     Orders
                 </div>
                 <div class="links">
-                    @if(count($orders) > 1)
+                    @if(count($orders) >= 1)
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
