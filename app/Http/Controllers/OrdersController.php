@@ -57,7 +57,6 @@ class OrdersController extends Controller
             'currency'      => 'USD'
         );
         $iframe=Pesapal::makePayment($details);
-
         return view('payments.paynow', compact('iframe'));
     }
     public function paymentsuccess(Request $request)//just tells u payment has gone thru..but not confirmed

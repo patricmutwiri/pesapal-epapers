@@ -43,6 +43,7 @@
 
             .content {
                 text-align: center;
+                min-width: 768px;
             }
 
             .title {
@@ -85,7 +86,7 @@
                     Pay Now
                 </div>
                 <div class="links">
-                    {{ $iframe }}
+                    {!! $iframe !!}
                 </div>
             </div>
         </div>
