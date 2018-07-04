@@ -68,7 +68,7 @@
             }
             div.paynow p {
                 width: 100%;
-                padding: 6px 0;
+                padding: 5px 0;
             }
             .paynow label{
                 float: left;
@@ -122,6 +122,16 @@
                     <p>
                         {{ Form::label('email','Email') }} 
                         {{ Form::text('email','',['required' => true]) }}
+                    </p>
+                    <p>
+                        {{ Form::label('phonenumber','Phone') }} 
+                        {{ Form::text('phonenumber') }}
+                    </p>
+                    <span>
+                        {{ Form::label('dropoff','Dropoff Point/location description') }} 
+                    </span>
+                    <p>
+                        {{ Form::textarea('dropoff') }}
                     </p>
                     <p>{{ Form::submit('Pay Now') }}</p>
                     {{ Form::close() }}

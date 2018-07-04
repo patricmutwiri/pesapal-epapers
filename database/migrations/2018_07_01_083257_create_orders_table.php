@@ -22,6 +22,8 @@ class CreateOrdersTable extends Migration
             $table->string('transactionid');
             $table->string('status');
             $table->string('description');
+            $table->string('dropoff');
+            $table->string('phonenumber');
             $table->string('amount');
             $table->timestamps();
         });

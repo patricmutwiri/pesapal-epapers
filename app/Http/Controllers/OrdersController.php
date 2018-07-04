@@ -34,6 +34,8 @@ class OrdersController extends Controller
         $payments->amount = $amount;
         $payments->total  = $amount;
         $payments->uid = Auth::user()->id;
+        $payments->dropoff = $request->dropoff;
+        $payments->phonenumber = $request->phonenumber;
         $payments->papers = implode(',', $newspapers);
         $payments->description = 'Payment for; '.implode(',', $newspapers);
 
@@ -46,10 +48,10 @@ class OrdersController extends Controller
             'first_name'    =>  $request->firstname,
             'last_name'     =>  $request->lastname,
             'email'         =>  $request->email,
-            'phonenumber'   =>  '254727542899',
+            'phonenumber'   =>  $request->phonenumber,
             'reference'     =>  $payments->transactionid,
             'height'        =>  '400px',
-            //'currency' => 'USD'
+            'currency'      => 'USD'
         );
         $iframe=Pesapal::makePayment($details);
 
