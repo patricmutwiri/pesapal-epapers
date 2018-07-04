@@ -93,6 +93,7 @@
                                     <th>UID</th>
                                     <th>Papers</th>
                                     <th>Total</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,6 +103,7 @@
                                         <td>{{Auth::user($order->uid)->name}}</td>
                                         <td>{!!str_replace(',', '<br/>', $order->papers)!!}</td>
                                         <td>{{$order->total}}</td>
+                                        <td>{{$order->status}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
