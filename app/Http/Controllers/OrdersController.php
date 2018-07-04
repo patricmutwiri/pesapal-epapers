@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Pesapal;
+use Mail;
 use Illuminate\Http\Request;
 use App\Orders;
 use App\Newspaper;
@@ -69,8 +70,9 @@ class OrdersController extends Controller
         $payments->status = 'PENDING';
         $payments->save();
         //go back home
-        $payments=Orders::all();
-        return view('payments.home', compact('payments'));
+        $all = Orders::all();
+
+        return view('payments.order', compact('payments'));
     }
     //This method just tells u that there is a change in pesapal for your transaction..
     //u need to now query status..retrieve the change...CANCELLED? CONFIRMED?
@@ -90,6 +92,14 @@ class OrdersController extends Controller
         $payments->status = $status;
         $payments->payment_method = "PESAPAL";//use the actual method though...
         $payments->save();
+        // send mail here
+        $contactEmail   = Auth::user($payments->uid)->email;
+        $contactName    = Auth::user($payments->uid)->name;
+
+        Mail::raw('Hello '.$contactName.', your order was received and the status assigned as '.$status.'', function ($message) use ($contactEmail, $contactName) {
+           $message->to($contactEmail,$contactName)->subject('Order Notification');
+        });
+
         return "success";
     }
     /**
