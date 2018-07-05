@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->string('dropoff');
             $table->string('phonenumber');
             $table->string('amount');
+            $table->string('paperids');
             $table->timestamps();
         });
     }

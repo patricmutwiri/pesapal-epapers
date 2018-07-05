@@ -21,12 +21,14 @@ class OrdersController extends Controller
         }
         $total      = array();
         $newspapers = array();
+        $paperids   = array();
         foreach ($papers as $key => $paper) {
             $paper          = json_decode($paper,true);
             $total[]        = $paper['price'];
             $thispaper      = Newspaper::find($paper['id']);
             $papername      = 'Paper: '.ucwords($thispaper->name).'/Dated: '.date('d-m-Y',strtotime($thispaper->created_at));
             $newspapers[]   = $papername;
+            $paperids[]     = $paper['id'];
         }
 
         //dd($total);
@@ -42,6 +44,7 @@ class OrdersController extends Controller
         $payments->phonenumber  = $request->phonenumber;
         $payments->papers       = implode(',', $newspapers);
         $payments->description  = 'Payment for; '.implode(',', $newspapers);
+        $payments->paperids     = implode(',', $paperids);
 
         $payments->save();
 
@@ -107,6 +110,7 @@ class OrdersController extends Controller
            $message->to($contactEmail,$contactName)->subject('Order Notification');
         });
 
+        $this->confirmation($trackingid,$status,'PESAPAL',$merchant_reference);
         return "success";
     }
     /**
@@ -142,5 +146,32 @@ class OrdersController extends Controller
         $payments->status = $status;
         $payments->payment_method = $payment_method;
         $payments->save();
+
+          // send mail here
+        $contactEmail   = Auth::user($payments->uid)->email;
+        $contactName    = Auth::user($payments->uid)->name;
+
+        Mail::raw('Hello '.$contactName.', your order status was updated to '.$status.'', function ($message) use ($contactEmail, $contactName) {
+           $message->to($contactEmail,$contactName)->subject('Order Notification');
+        });
+
+        if($status == 'COMPLETED' || $status == 'completed') {
+            $epapers = explode(',', $payments->paperids);
+            $files = array();
+            foreach ($epapers as $key => $epaper) {
+                $thispaper      = Newspaper::find($epaper);
+                $files[]        = public_path('newspapers/').$thispaper->file;
+            }
+            // send paper here
+            Mail::send(['html' => 'emails.neworder'], ['files' => $files, 'payment' => $payments], function($message) use ($contactEmail, $contactName){
+                foreach ($files as $key => $file) {
+                    $message->attach($file, [
+                        'as' => time().'paper.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+                }
+                $message->to($contactEmail, $contactName)->subject('Order Completed');
+            });
+        }   
     }
 }
