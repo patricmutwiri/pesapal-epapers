@@ -110,6 +110,26 @@ class OrdersController extends Controller
            $message->to($contactEmail,$contactName)->subject('Order Notification');
         });
 
+        if($status == 'COMPLETED' || $status == 'completed') {
+            $epapers = explode(',', $payments->paperids);
+            $files = array();
+            foreach ($epapers as $key => $epaper) {
+                $thispaper      = Newspaper::find($epaper);
+                $files[]        = public_path('newspapers/').$thispaper->file;
+            }
+            // send paper here
+
+            Mail::send(['html' => 'emails.neworder'], ['payment' => $payments], function($message) use ($contactEmail, $contactName, $files){
+                foreach ($files as $key => $file) {
+                    $message->attach($file, [
+                        'as' => time().'paper.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+                }
+                $message->to($contactEmail, $contactName)->subject('Order Completed');
+            });
+        }
+        
         $this->confirmation($trackingid,$status,'PESAPAL',$merchant_reference);
         return "success";
     }
@@ -163,6 +183,7 @@ class OrdersController extends Controller
                 $files[]        = public_path('newspapers/').$thispaper->file;
             }
             // send paper here
+
             Mail::send(['html' => 'emails.neworder'], ['payment' => $payments], function($message) use ($contactEmail, $contactName, $files){
                 foreach ($files as $key => $file) {
                     $message->attach($file, [
