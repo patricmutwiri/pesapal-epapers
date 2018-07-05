@@ -163,7 +163,7 @@ class OrdersController extends Controller
                 $files[]        = public_path('newspapers/').$thispaper->file;
             }
             // send paper here
-            Mail::send(['html' => 'emails.neworder'], ['files' => $files, 'payment' => $payments], function($message) use ($contactEmail, $contactName){
+            Mail::send(['html' => 'emails.neworder'], ['payment' => $payments], function($message) use ($contactEmail, $contactName, $files){
                 foreach ($files as $key => $file) {
                     $message->attach($file, [
                         'as' => time().'paper.pdf',
