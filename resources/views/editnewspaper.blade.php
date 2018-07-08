@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>E-Papers</title>
+        <title>Edit Paper</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    My paper
+                    {{ $paper->name }} Edit
                 </div>
                 @if(session()->has('message'))
                     <div class="alert alert-success">
@@ -92,7 +92,24 @@
                     </div>
                 @endif
                 <div class="links">
-                    {{ $content }}
+                    {{ Form::open(['url' => 'updatenewspaper/'.$paper->id,'files'=>'true']) }}
+                    <p>
+                        {{ Form::label('name', 'Paper Name') }}
+                        {{ Form::text('name',$paper->name) }}
+                    </p>
+                    <p>
+                        {{ Form::label('price', 'Paper Price') }}
+                        {{ Form::number('price', $paper->price) }}
+                    </p>
+                    <p>
+                        {{ Form::label('file', 'Upload File') }}
+                        {{ Form::file('file') }}
+                    </p>
+                    <p>
+                        {{ Form::submit('Save Now') }}
+                        {{csrf_field()}}
+                    <p>
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>

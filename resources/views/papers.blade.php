@@ -104,12 +104,22 @@
                 <div class="title m-b-md">
                     Papers
                 </div>
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        <h2>{{ session()->get('message') }}</h2>
+                    </div>
+                @endif
+                @if(session()->has('error'))
+                    <div class="alert alert-error">
+                        <h2>{{ session()->get('error') }}</h2>
+                    </div>
+                @endif
                 @if(count($papers) >= 1) 
                     <p>Please Check the paper(s) you'd like to buy.</p>
                     <hr/>
                     {{ Form::open(['url' => 'paynow']) }}
                         @foreach ($papers as $paper)
-                            <p> {{ Form::checkbox('papers[]', json_encode(array('id' => $paper->id, 'price' => $paper->price)), false) }} &nbsp; {{ ucwords(strtolower($paper->name)).'#'.$paper->id.' / '.date('D d M y',strtotime($paper->created_at)).' @Ksh '.$paper->price }}</p>
+                            <p> {{ Form::checkbox('papers[]', json_encode(array('id' => $paper->id, 'price' => $paper->price)), false) }} &nbsp; {{ ucwords(strtolower($paper->name)).'#'.$paper->id.' / '.date('D d M y',strtotime($paper->created_at)).' @Ksh '.$paper->price }} <a class="btn" href="editnewspaper/{{$paper->id}}">Edit</a></p>
                         @endforeach
                     <p>
                         {{ Form::label('firstname','First Name') }} 

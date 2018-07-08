@@ -20,6 +20,8 @@ Route::post('/papers', 'NewspaperController@index')->name('papers');
 Route::get('/paper/{id}', 'NewspaperController@show')->name('paper');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+ //    	Route::get('/editnewspaper/{id}', 'NewspaperController@edit')->name('editnewspaper');
+	// Route::post('/updatenewspaper/{id}', 'NewspaperController@update')->name('updatenewspaper');
 });
 
 Auth::routes();
@@ -32,6 +34,8 @@ Route::post('/paynow', 'OrdersController@payment')->name('paynow');
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('file/{id}', ['as' => 'file', 'uses'=>'HomeController@getFile']);
 	Route::get('/newpaper', 'NewspaperController@create')->name('newpaper');
+	Route::get('/editnewspaper/{id}', 'NewspaperController@edit')->name('editnewspaper');
+	Route::post('/updatenewspaper/{id}', 'NewspaperController@update')->name('updatenewspaper');
 	Route::get('/orders', 'OrdersController@index')->name('orders');
 	Route::get('/order/{id}', 'OrdersController@show')->name('order');
 });

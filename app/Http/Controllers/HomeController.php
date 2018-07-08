@@ -69,7 +69,7 @@ class HomeController extends Controller
         $filePath = public_path('newspapers/').$thispaper->file;
         // file not found
         if(!File::exists($filePath)) {
-          abort(404);
+          abort(404, 'Paper not found, file uploaded incorrectly');
         }
 
         return response()->file($filePath);

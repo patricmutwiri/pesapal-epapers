@@ -13,6 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            <h2>{{ session()->get('message') }}</h2>
+                        </div>
+                    @endif
+                    @if(session()->has('error'))
+                        <div class="alert alert-error">
+                            <h2>{{ session()->get('error') }}</h2>
+                        </div>
+                    @endif
                     You are logged in!
                     <hr/>
                     <p><b>My Orders</b></p>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Newspaper;
+use File;
+use Storage;
 
 class NewspaperController extends Controller
 {
@@ -45,13 +47,12 @@ class NewspaperController extends Controller
         //upload file
         if ($request->hasFile('file')) {
             $file = $request->file;
-            $uniquepaperName = time() . $request->file->getClientOriginalName();
+            $uniquepaperName = uniqid().$request->file->getClientOriginalName();
             $request->file->move(public_path('newspapers/'), $uniquepaperName);
-            $file = $uniquepaperName;
         }
         $paper->name    = ucwords(strtolower($request->name));
         $paper->price   = $request->price;
-        $paper->file    = $file;
+        $paper->file    = $uniquepaperName;
         if($paper->save()) {
             return back()->with('message','Newspaper Saved Successfully');
         } else {
@@ -82,7 +83,9 @@ class NewspaperController extends Controller
      */
     public function edit($id)
     {
-        //
+        $paper = Newspaper::findOrFail($id);
+        //dd($paper);
+        return view('editnewspaper', compact('paper'));
     }
 
     /**
@@ -94,7 +97,21 @@ class NewspaperController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $paper = Newspaper::findOrFail($id);
+        //upload file
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $uniquepaperName = uniqid().$request->file->getClientOriginalName();
+            $request->file->move(public_path('newspapers/'), $uniquepaperName);
+            $paper->file    = $uniquepaperName;
+        }
+        $paper->name    = ucwords(strtolower($request->name));
+        $paper->price   = $request->price;
+        if($paper->save()) {
+            return back()->with('message','Newspaper updated Successfully');
+        } else {
+            return back()->with('error','Newspaper updated Successfully');
+        }
     }
 
     /**
@@ -105,6 +122,6 @@ class NewspaperController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $paper = Newspaper::find($id);
     }
 }

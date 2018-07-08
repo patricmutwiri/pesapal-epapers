@@ -56,6 +56,16 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    <h2>{{ session()->get('message') }}</h2>
+                </div>
+            @endif
+            @if(session()->has('error'))
+                <div class="alert alert-error">
+                    <h2>{{ session()->get('error') }}</h2>
+                </div>
+            @endif
             <div class="links">
                 <p>Hello {!! Auth::user($payment->uid)->name !!},</p>
                 <p>your order was processed and attached are your papers.</p>
