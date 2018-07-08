@@ -30,6 +30,7 @@ Route::get('/paynow', 'OrdersController@payment')->name('paynow');
 Route::post('/paynow', 'OrdersController@payment')->name('paynow');
 
 Route::group(['middleware' => 'auth'], function () {
+	Route::get('file/{id}', ['as' => 'file', 'uses'=>'HomeController@getFile']);
 	Route::get('/newpaper', 'NewspaperController@create')->name('newpaper');
 	Route::get('/orders', 'OrdersController@index')->name('orders');
 	Route::get('/order/{id}', 'OrdersController@show')->name('order');

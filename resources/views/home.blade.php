@@ -31,11 +31,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $order)
+                                    @foreach ($orders as $key => $order)
                                         <tr>
                                             <td>{{ $order->id}}</td>
                                             <td>{{ $order->amount}}</td>
-                                            <td>{!! str_replace(',', '<br/>', $order->papers) !!}</td>
+                                            <td>
+                                                @if(count($orders[$key]['mypapers']) >= 1)
+                                                    <ul>
+                                                        <li><a href="file/{{ $orders[$key]['mypapers']['path'] }}">{{ $orders[$key]['mypapers']['papername'] }}</a></li>
+                                                    </ul>
+                                                @else
+                                                    {{ 'N/A' }}
+                                                @endif
+                                            </td>
                                             <td>{{ $order->created_at }}</td>
                                             <td>{{ Auth::user($order->uid)->name }}</td>
                                             <td>{{ $order->dropoff }}</td>
