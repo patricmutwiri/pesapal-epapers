@@ -117,17 +117,19 @@ class OrdersController extends Controller
                 $thispaper      = Newspaper::find($epaper);
                 $files[]        = public_path('newspapers/').$thispaper->file;
             }
-            // send paper here
-
-            Mail::send(['html' => 'emails.neworder'], ['payment' => $payments], function($message) use ($contactEmail, $contactName, $files){
-                foreach ($files as $key => $file) {
-                    $message->attach($file, [
-                        'as' => time().'paper.pdf',
-                        'mime' => 'application/pdf',
-                    ]);
-                }
-                $message->to($contactEmail, $contactName)->subject('Order Completed');
+            Mail::raw('Hello '.$contactName.', your order was confirmed and the status assigned as '.$status.'. Please login to read.', function ($message) use ($contactEmail, $contactName) {
+                $message->to($contactEmail,$contactName)->subject('Order Completed');
             });
+            // send paper here
+            // Mail::send(['html' => 'emails.neworder'], ['payment' => $payments], function($message) use ($contactEmail, $contactName, $files){
+            //     foreach ($files as $key => $file) {
+            //         $message->attach($file, [
+            //             'as' => time().'paper.pdf',
+            //             'mime' => 'application/pdf',
+            //         ]);
+            //     }
+            //     $message->to($contactEmail, $contactName)->subject('Order Completed');
+            // });
         }
         
         $this->confirmation($trackingid,$status,'PESAPAL',$merchant_reference);
@@ -183,16 +185,19 @@ class OrdersController extends Controller
                 $files[]        = public_path('newspapers/').$thispaper->file;
             }
             // send paper here
-
-            Mail::send(['html' => 'emails.neworder'], ['payment' => $payments], function($message) use ($contactEmail, $contactName, $files){
-                foreach ($files as $key => $file) {
-                    $message->attach($file, [
-                        'as' => time().'paper.pdf',
-                        'mime' => 'application/pdf',
-                    ]);
-                }
-                $message->to($contactEmail, $contactName)->subject('Order Completed');
+            Mail::raw('Hello '.$contactName.', your order was confirmed and the status assigned as '.$status.'. Please login to read.', function ($message) use ($contactEmail, $contactName) {
+                $message->to($contactEmail,$contactName)->subject('Order Completed');
             });
+            
+            // Mail::send(['html' => 'emails.neworder'], ['payment' => $payments], function($message) use ($contactEmail, $contactName, $files){
+            //     foreach ($files as $key => $file) {
+            //         $message->attach($file, [
+            //             'as' => time().'paper.pdf',
+            //             'mime' => 'application/pdf',
+            //         ]);
+            //     }
+            //     $message->to($contactEmail, $contactName)->subject('Order Completed');
+            // });
         }   
     }
 }

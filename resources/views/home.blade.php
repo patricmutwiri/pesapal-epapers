@@ -36,12 +36,12 @@
                                             <td>{{ $order->id}}</td>
                                             <td>{{ $order->amount}}</td>
                                             <td>
-                                                @if(count($orders[$key]['mypapers']) >= 1)
+                                                @if(!empty(count($orders[$key]['mypapers'])))
                                                     <ul>
                                                         <li><a href="file/{{ $orders[$key]['mypapers']['path'] }}">{{ $orders[$key]['mypapers']['papername'] }}</a></li>
                                                     </ul>
                                                 @else
-                                                    {{ 'N/A' }}
+                                                {{ 'N/A' }}
                                                 @endif
                                             </td>
                                             <td>{{ $order->created_at }}</td>

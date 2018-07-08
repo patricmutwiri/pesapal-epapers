@@ -40,7 +40,7 @@ class HomeController extends Controller
                     foreach ($mypapers as $key => $mypaper) {
                         $thispaper  = Newspaper::find($mypaper);
                         $orders[$key]['mypapers']    = array(
-                            'papername' => $thispaper['name'].' / '.date('d-M-Y',strtotime($thispaper['created_at'])), 
+                            'papername' => $thispaper['name'], //.' / '.date('d-M-Y',strtotime($thispaper['created_at'])), 
                             'path'      => $thispaper['id']
                         );
                     }
@@ -68,7 +68,6 @@ class HomeController extends Controller
 
         $filePath = public_path('newspapers/').$thispaper->file;
         // file not found
-        // dd(File::exists($filePath));
         if(!File::exists($filePath)) {
           abort(404);
         }
